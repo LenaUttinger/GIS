@@ -1,7 +1,5 @@
-echo "# GIS" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/LenaUttinger/GIS.git
-git push -u origin main
+# GIS Projekt 
+## Projektidee:
+Website zu einem Online-Spiel. Auf der Website sollen alle nützliche Informationen zu der Gilde aufgelistet werden.
+Evente, Anforderungen, Gildenregeln etc. 
+Die Gildenregeln sollen Löschbar sein, sodass bei Änderungen nicht jedesmal der Code umgeschrieben werden muss.
