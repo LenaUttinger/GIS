@@ -1,5 +1,29 @@
 <!DOCTYPE html>
 <html lang="de">
-    <body>
-    </body>   
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evente</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="java.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h2>Neues Event anlegen</h2>
+    </header>
+    <main>
+        <form id="myForm">
+          <label for="firstname">Eventname:</label>
+          <input type="text" id="firstname" name="firstname"><br><br>
+          <label for="startofevent">Event Beginn:</label>
+          <input type="date" id="startofevent" name="startofevent" /><br><br>
+          <label for="endofevent">Event Ende:</label>
+          <input type="date" id="endofevent" name="endofevent" /><br><br>
+          <button type="button" id="saveBtn">Save</button>
+        </form>
+    </main>
+    <footer>
+      <hr /> Seite erstellt von Lena Uttinger
+    </footer>
+  </body>
 </html>
