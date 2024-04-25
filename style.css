@@ -1,64 +1,21 @@
 * {
     background-color: #424754;
 }
-
-h1, h2, h3 {
+h1, h2, h3, h4 {
     color: #277492
 }
 a {
     color: rgb(165, 144, 187);
 }
-
 hr {
-     border: 1px solid #277492;
+    border: 1px solid #277492;
 }
-
 .Aufzählung-hand {
     color: rgb(128, 117, 233);
-}
-.Hase {
-    color: #277492;
 }
 p, h1, h2, h3, nav, footer {
     text-align: center;
 }
-#NeuesEventhinzufügen {
-    text-align: center;
-}
-
-.divider {								/* minor cosmetics */
-    display: table; 
-    font-size: 24px; 
-    text-align: center; 
-    width: 90%; 						/* divider width */
-    margin: 30px auto;					/* spacing above/below */
-}
-.divider span { display: table-cell; position: relative; }
-.divider span:first-child, .divider span:last-child {
-    width: 50%;
-    top: 13px;							/* adjust vertical align */
-    -moz-background-size: 100% 2px; 	/* line width */
-    background-size: 100% 2px; 			/* line width */
-    background-position: 0 0, 0 100%;
-    background-repeat: no-repeat;
-}
-.divider span:first-child {				/* color changes in here */
-        background-image: linear-gradient(90deg, transparent, rgb(165, 144, 187));
-}
-
-.divider span:nth-child(2) {
-    color: #000; padding: 0px 7px; 
-}
-
-.divider span:last-child {				/* color changes in here */
-    background-image: linear-gradient(90deg, rgb(165, 144, 187), transparent);
-}
-.eventregeln {
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 30px;
-        width: 10em
-    }
 a {
     text-decoration: none;
 }
@@ -68,8 +25,4 @@ a {
     border-style: ridge;
     line-height: 40px;
     padding: 5px;
-}
-.formular {
-    line-height: 30px;
-    
 }
