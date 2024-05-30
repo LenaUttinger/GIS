@@ -5,25 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Evente</title>
     <link rel="stylesheet" href="./style.css">
-    <script src="java.js" defer></script>
+    <script src="./script.js" defer></script>
   </head>
   <body>
     <header>
-      <h2>Neues Event anlegen</h2>
+      <div class="header" id="myHeader"></div>
     </header>
     <main>
-        <form id="myForm">
-          <label for="firstname">Eventname:</label>
-          <input type="text" id="firstname" name="firstname"><br><br>
+      <h2>Neues Event anlegen</h2>
+      <div id="forum">
+        <form id="formular">
+          <label for="nameofevent">Name des Events:</label>
+          <input id="nameofevent" type="text"><br><br>
           <label for="startofevent">Event Beginn:</label>
-          <input type="date" id="startofevent" name="startofevent" /><br><br>
+          <input type="date" id="startofevent" name="startofevent"><br><br>
           <label for="endofevent">Event Ende:</label>
-          <input type="date" id="endofevent" name="endofevent" /><br><br>
+          <input type="date" id="endofevent" name="endofevent"><br><br>
           <button type="button" id="saveBtn">Save</button>
         </form>
+      </div>
     </main>
     <footer>
-      <hr />          
+      <hr>
     </footer>
   </body>
 </html>

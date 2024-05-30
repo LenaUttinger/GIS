@@ -1,4 +1,4 @@
-* {
+*{
     background-color: #424754;
 }
 h1, h2, h3, h4 {
@@ -25,4 +25,71 @@ a {
     border-style: ridge;
     line-height: 40px;
     padding: 5px;
+}
+
+.header {
+    background-color: #3b9dca;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+  }
+ 
+  .header a {
+    color: rgb(255, 255, 255);
+    background-color: #3b9dca;
+  }
+
+  form {
+    margin-bottom: 20px;
+}
+
+/* Stil für die Labels */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Stil für die Eingabefelder */
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#saveBtn {
+    background-color: #2495a1;
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#saveBtn:hover {
+    background-color: #e83241;
+}
+
+/* Stil für den Löschen-Button */
+.deleteBtn {
+    background-color: #2495a1;
+    color: white;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background-color: #e83241;
+}
+
+/* Stil für das Formularcontainer */
+#forum {
+    max-width: 400px;
+    margin: 0 auto;
 }
