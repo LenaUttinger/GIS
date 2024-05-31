@@ -36,9 +36,10 @@ document.addEventListener("DOMContentLoaded", function() {
     let button = document.getElementById("saveBtn");
     button.addEventListener("click", addElement);
 
-    // Define the function to execute when the button is clicked
+    // Funktion, wenn der Button geklickt wird
     function addElement(event) {
-        // Prevent the default form submission behavior
+
+      //Seit wird nicht neu geladen
         event.preventDefault();
 
         // Textfeld bei IDs holen
