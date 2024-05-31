@@ -1,3 +1,5 @@
+
+//wartet bis HTML vollständig geladen wird
 document.addEventListener("DOMContentLoaded", function() {
     // Function zum Header erstellen
     function createHeader() {
