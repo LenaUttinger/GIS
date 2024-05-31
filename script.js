@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
         a.href = link.href;
         a.innerHTML = link.text;
   
-        // Füge das Linkelement zum Header hinzu
         header.appendChild(a);
   
         // Trennzeichen
