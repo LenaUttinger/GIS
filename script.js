@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Funktion, wenn der Button geklickt wird
     function addElement(event) {
 
-      //Seit wird nicht neu geladen
+      //Seite wird nicht neu geladen
         event.preventDefault();
 
         // Textfeld bei IDs holen
