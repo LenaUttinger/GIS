@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Function to create the header
+    // Function zum Header erstellen
     function createHeader() {
       let header = document.getElementById("myHeader");
   
       // Links erstellen
       let links = [
-        { href: "index.html", text: "Hauptseite" },
+        { href: "index.html", text: "Startseite" },
         { href: "evente.html", text: "Evente" },
         { href: "anforderungen.html", text: "Anforderungen" },
         { href: "fuehrung.html", text: "Führung" },
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Füge das Linkelement zum Header hinzu
         header.appendChild(a);
   
-        // Füge das Trennzeichen " | " hinzu, außer für das letzte Element
+        // Trennzeichen
         if (index < links.length - 1) {
           let separator = document.createTextNode(" | ");
           header.appendChild(separator);
@@ -40,33 +40,32 @@ document.addEventListener("DOMContentLoaded", function() {
         // Prevent the default form submission behavior
         event.preventDefault();
 
-        // Get the text field elements by their IDs
+        // Textfeld bei IDs holen
         let eventNameField = document.getElementById("nameofevent");
         let startDateField = document.getElementById("startofevent");
         let endDateField = document.getElementById("endofevent");
 
-        // Format the date in German format "Tag.Monat.Jahr"
+        // Datum formatieren "Tag.Monat.Jahr"
         let startDate = formatDate(startDateField.value);
         let endDate = formatDate(endDateField.value);
 
-        // Get the container element that contains the input field and the button
+        
         let container = document.getElementById("forum");
 
-        // Create a new paragraph element
         let p = document.createElement("p");
 
-        // Set the text content of the paragraph
+        // Kontext 
         p.textContent = startDate + " - " + endDate + ": " + eventNameField.value + " ";
 
-        // Insert the new paragraph above the input field
+        // Text wird oberhalb eingefügt
         container.insertBefore(p, document.getElementById("formular"));
 
-        // Clear the text fields after adding the paragraph
+        // Nach Eingabe wird Textfeld geleert
         eventNameField.value = "";
         startDateField.value = "";
         endDateField.value = "";
 
-        // Create a delete button
+        // Delete Button erstellen
         let deleteBtn = document.createElement("button");
         deleteBtn.textContent = "delete";
         deleteBtn.classList.add("deleteBtn");
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             container.removeChild(p); // Remove the paragraph when delete button is clicked
         });
 
-        // Append the delete button to the paragraph
+        // Delete Button wird hinzugefügt
         p.appendChild(deleteBtn);
     }
 
@@ -84,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
 
-        // Füge führende Null hinzu, falls der Tag einstellig ist
+        // Im Datum wird eine "0" hinzugefügt
         if (day < 10) {
             day = "0" + day;
         }
@@ -96,11 +95,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+// Footer erstellen
+
 function createFooter() {
     let footer = document.createElement("footer");
     footer.innerHTML = "Seite erstellt bei Lena Uttinger";
-
-    // Append the footer to the body
+    
     document.body.appendChild(footer);
 }
 createFooter();
