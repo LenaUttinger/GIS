@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
         deleteBtn.textContent = "delete";
         deleteBtn.classList.add("deleteBtn");
         deleteBtn.addEventListener("click", function() {
-            container.removeChild(p); // Remove the paragraph when delete button is clicked
+            container.removeChild(p); 
         });
 
         // Delete Button wird hinzugefügt
