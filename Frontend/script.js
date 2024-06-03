@@ -1,45 +1,46 @@
-
-//wartet bis HTML vollständig geladen wird
+// Wartet bis HTML vollständig geladen wird
 document.addEventListener("DOMContentLoaded", function() {
-    // Function zum Header erstellen
-    function createHeader() {
+  // Funktion zum Header erstellen
+  function createHeader() {
       let header = document.getElementById("myHeader");
-  
+
       // Links erstellen
       let links = [
-        { href: "index.html", text: "Startseite" },
-        { href: "evente.html", text: "Evente" },
-        { href: "anforderungen.html", text: "Anforderungen" },
-        { href: "fuehrung.html", text: "Führung" },
-        { href: "gildenregeln.html", text: "Gildenregeln" },
-        { href: "kontakt.html", text: "Kontakt" },
+          { href: "index.html", text: "Startseite" },
+          { href: "evente.html", text: "Evente" },
+          { href: "anforderungen.html", text: "Anforderungen" },
+          { href: "fuehrung.html", text: "Führung" },
+          { href: "gildenregeln.html", text: "Gildenregeln" },
+          { href: "kontakt.html", text: "Kontakt" }
       ];
-  
+
       // Links zum Header hinzufügen
       links.forEach((link, index) => {
-        let a = document.createElement("a");
-        a.href = link.href;
-        a.innerHTML = link.text;
-  
-        header.appendChild(a);
-  
-        // Trennzeichen
-        if (index < links.length - 1) {
-          let separator = document.createTextNode(" | ");
-          header.appendChild(separator);
-        }
+          let a = document.createElement("a");
+          a.href = link.href;
+          a.innerHTML = link.text;
+
+          header.appendChild(a);
+
+          // Trennzeichen
+          if (index < links.length - 1) {
+              let separator = document.createTextNode(" | ");
+              header.appendChild(separator);
+          }
       });
-    }
-    createHeader();
-  
+  }
+  createHeader();
+//____________________________________________________________________________________________________________________________
+
+    // Überprüfen, ob Daten im Local Storage vorhanden sind und falls ja, sie wiederherstellen
+    restoreElements();
 
     let button = document.getElementById("saveBtn");
     button.addEventListener("click", addElement);
 
     // Funktion, wenn der Button geklickt wird
     function addElement(event) {
-
-      //Seite wird nicht neu geladen
+        //Seite wird nicht neu geladen
         event.preventDefault();
 
         // Textfeld bei IDs holen
@@ -51,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let startDate = formatDate(startDateField.value);
         let endDate = formatDate(endDateField.value);
 
-        
         let container = document.getElementById("forum");
 
         let p = document.createElement("p");
@@ -73,10 +73,13 @@ document.addEventListener("DOMContentLoaded", function() {
         deleteBtn.classList.add("deleteBtn");
         deleteBtn.addEventListener("click", function() {
             container.removeChild(p); 
+            saveElements(); // Daten aktualisieren, nachdem ein Element entfernt wurde
         });
 
         // Delete Button wird hinzugefügt
         p.appendChild(deleteBtn);
+
+        saveElements(); // Daten speichern, nachdem ein Element hinzugefügt wurde
     }
 
     function formatDate(dateString) {
@@ -89,14 +92,27 @@ document.addEventListener("DOMContentLoaded", function() {
         if (day < 10) {
             day = "0" + day;
         }
-        
+
         if (month <10){
             month = "0" + month;
         }
         return day + "." + month + "." + year;
     }
+
+    function saveElements() {
+        let forumContent = document.getElementById("forum").innerHTML;
+        localStorage.setItem("forumContent", forumContent);
+    }
+
+    function restoreElements() {
+        let forumContent = localStorage.getItem("forumContent");
+        if (forumContent) {
+            document.getElementById("forum").innerHTML = forumContent;
+        }
+    }
 });
 
+// _____________________________________________________________________________________________________________
 // Footer erstellen
 
 function createFooter() {
@@ -106,3 +122,4 @@ function createFooter() {
     document.body.appendChild(footer);
 }
 createFooter();
+// _____________________________________________________________________________________________________________
