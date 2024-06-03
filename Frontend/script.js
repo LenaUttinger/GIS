@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
   createHeader();
 //____________________________________________________________________________________________________________________________
 
-    // Überprüfen, ob Daten im Local Storage vorhanden sind und falls ja, sie wiederherstellen
+    // überprüft, ob Daten vorhanden sind
     restoreElements();
 
     let button = document.getElementById("saveBtn");
@@ -73,13 +73,13 @@ document.addEventListener("DOMContentLoaded", function() {
         deleteBtn.classList.add("deleteBtn");
         deleteBtn.addEventListener("click", function() {
             container.removeChild(p); 
-            saveElements(); // Daten aktualisieren, nachdem ein Element entfernt wurde
+            saveElements(); // Daten werden aktualisiert, wenn ein Event gelöscht wird
         });
 
         // Delete Button wird hinzugefügt
         p.appendChild(deleteBtn);
 
-        saveElements(); // Daten speichern, nachdem ein Element hinzugefügt wurde
+        saveElements(); // Daten werden aktualisiert, wenn ein Event hinzugefügt wird
     }
 
     function formatDate(dateString) {
@@ -100,14 +100,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function saveElements() {
-        let forumContent = document.getElementById("forum").innerHTML;
-        localStorage.setItem("forumContent", forumContent);
+        let formularContent = document.getElementById("formular").innerHTML;
+        localStorage.setItem("formularContent", formularContent);
     }
 
     function restoreElements() {
-        let forumContent = localStorage.getItem("forumContent");
-        if (forumContent) {
-            document.getElementById("forum").innerHTML = forumContent;
+        let formularContent = localStorage.getItem("formularContent");
+        if (formularContent) {
+            document.getElementById("formular").innerHTML = formularContent;
         }
     }
 });
