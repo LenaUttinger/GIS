@@ -23,3 +23,8 @@ const server = http.createServer((request, response) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+
+// db.run('INSERT INTO users VALUES (3, "Horst Hund Junior")');
+// db.each ('SELECT * FROM users ORDER BY id', (err, row) =>)
+// 
