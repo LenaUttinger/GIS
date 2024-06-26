@@ -1,87 +1,74 @@
 // Wartet bis HTML vollständig geladen wird
-document.addEventListener("DOMContentLoaded", function() {
-  // Funktion zum Header erstellen
-  function createHeader() {
-      let header = document.getElementById("myHeader");
+document.addEventListener("DOMContentLoaded", function () {
 
-      // Links erstellen
-      let links = [
-          { href: "index.html", text: "Startseite" },
-          { href: "evente.html", text: "Evente" },
-          { href: "anforderungen.html", text: "Anforderungen" },
-          { href: "fuehrung.html", text: "Führung" },
-          { href: "gildenregeln.html", text: "Gildenregeln" },
-          { href: "kontakt.html", text: "Kontakt" }
-      ];
+    // Funktion zum Header erstellen
+    function createHeader() {
+        let header = document.getElementById("myHeader");
 
-      // Links zum Header hinzufügen
-      links.forEach((link, index) => {
-          let a = document.createElement("a");
-          a.href = link.href;
-          a.innerHTML = link.text;
+        // Links erstellen
+        let links = [
+            { href: "index.html", text: "Startseite" },
+            { href: "evente.html", text: "Evente" },
+            { href: "anforderungen.html", text: "Anforderungen" },
+            { href: "fuehrung.html", text: "Führung" },
+            { href: "gildenregeln.html", text: "Gildenregeln" },
+            { href: "kontakt.html", text: "Kontakt" }
+        ];
 
-          header.appendChild(a);
+        // Links zum Header hinzufügen
+        links.forEach((link, index) => {
+            let a = document.createElement("a");
+            a.href = link.href;
+            a.innerHTML = link.text;
 
-          // Trennzeichen
-          if (index < links.length - 1) {
-              let separator = document.createTextNode(" | ");
-              header.appendChild(separator);
-          }
-      });
-  }
-  createHeader();
+            header.appendChild(a);
 
-  //_______________________________________________________________________________________________________________
-     
-  
-    // Überprüft, ob Daten vorhanden sind
-    restoreElements();
+            // Trennzeichen
+            if (index < links.length - 1) {
+                let separator = document.createTextNode(" | ");
+                header.appendChild(separator);
+            }
+        });
+    }
+
+    createHeader();
+    restoreElements(); // Wiederherstellen der gespeicherten Events
 
     let button = document.getElementById("saveBtn");
-        button.addEventListener("click", addElement);
-    
+    button.addEventListener("click", addElement);
 
-    // Funktion, wenn der Button geklickt wird
-    function addElement(event) {
-        // Seite wird nicht neu geladen
+    async function addElement(event) {
         event.preventDefault();
+        console.log("Speichern-Button geklickt");
 
-        // Textfelder bei IDs holen
         let eventNameField = document.getElementById("nameofevent");
         let startDateField = document.getElementById("startofevent");
         let endDateField = document.getElementById("endofevent");
 
-        // Datum formatieren "Tag.Monat.Jahr"
         let startDate = formatDate(startDateField.value);
         let endDate = formatDate(endDateField.value);
 
         let container = document.getElementById("forum");
         let p = document.createElement("p");
 
-        // Kontext
-        p.textContent = startDate + " - " + endDate + ": " + eventNameField.value + " ";
+        p.textContent = `${startDate} - ${endDate}: ${eventNameField.value} `;
 
-        // Delete Button erstellen
         let deleteBtn = document.createElement("button");
         deleteBtn.textContent = "delete";
         deleteBtn.classList.add("deleteBtn");
-        deleteBtn.addEventListener("click", function() {
+        deleteBtn.addEventListener("click", function () {
             container.removeChild(p);
-            saveElements(); // Daten werden aktualisiert, wenn ein Event gelöscht wird
+            saveElements();
         });
 
-        // Delete Button wird hinzugefügt
         p.appendChild(deleteBtn);
-
-        // Text wird oberhalb eingefügt
         container.insertBefore(p, document.getElementById("formular"));
 
-        // Nach Eingabe wird Textfeld geleert
         eventNameField.value = "";
         startDateField.value = "";
         endDateField.value = "";
 
-        saveElements(); // Daten werden aktualisiert, wenn ein Event hinzugefügt wird
+        await saveElements();
     }
 
     function formatDate(dateString) {
@@ -90,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
 
-        // Im Datum wird eine "0" hinzugefügt
         if (day < 10) {
             day = "0" + day;
         }
@@ -98,54 +84,295 @@ document.addEventListener("DOMContentLoaded", function() {
         if (month < 10) {
             month = "0" + month;
         }
-        return day + "." + month + "." + year;
+        return `${day}.${month}.${year}`;
     }
 
-    function saveElements() {
-        let events = []; //Array wird erstellt
-        let container = document.getElementById("forum");       // HTML- ELement mit der ID = forum wird gesucht und container zugewiesen
-        
-        let eventElements = container.querySelectorAll("p");    //Alle p Elemente des Containers werden eventElement hinzugefügt
-        
-        eventElements.forEach(function(eventElement) {
-            let eventText = eventElement.textContent.replace("delete", ""); //Für jedes p Element wird der Textinhalt aufgerufen und das Wort delete enfternt. 
-            events.push(eventText);                                         //Anschließend wird es in das Array 'events' eingefügt
-        });
-        
-
-        localStorage.setItem("events", JSON.stringify(events));
-        // Wird im LocalStorage, als JSON, unter "events" gespeichert
-    }
-
-    function restoreElements() {
-        let events = JSON.parse(localStorage.getItem("events"));
-        
+    async function saveElements() {
+        let events = [];
         let container = document.getElementById("forum");
-            // Eintrag "events" wird aus dem LocalStorage gelesen und als JSON geparst. 
-            // Ergebnis wird der Variable 'events' zugewiesen
 
-            events.forEach(function(eventText) {
-                let p = document.createElement("p");     // Für jedes Ereignis wird ein neues p Element erstellt.
-                p.textContent = eventText + " ";         // Eingabetext + Leerzeichen 
-                container.appendChild(p);                // die von oben neue p Elemente werden im container eingefügt
+        let eventElements = container.querySelectorAll("p");
 
-                // Delete Button erstellen
+        eventElements.forEach(function (eventElement) {
+            let eventText = eventElement.textContent.replace("delete", "");
+            events.push(eventText);
+        });
+
+        console.log("Speichern der Events:", events);
+
+        try {
+            let response = await fetch('http://127.0.0.1:3000/api/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(events)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            console.log("Events erfolgreich gespeichert");
+        } catch (error) {
+            console.error('Error saving events:', error);
+        }
+    }
+
+    async function restoreElements() {
+        try {
+            let response = await fetch('http://127.0.0.1:3000/api/events');
+            let events = await response.json();
+
+            console.log("Wiederhergestellte Events:", events);
+
+            let container = document.getElementById("forum");
+
+            events.forEach(function (eventText) {
+                let p = document.createElement("p");
+                p.textContent = `${eventText} `;
+
                 let deleteBtn = document.createElement("button");
                 deleteBtn.textContent = "delete";
                 deleteBtn.classList.add("deleteBtn");
-                deleteBtn.addEventListener("click", function() {
+                deleteBtn.addEventListener("click", async function () {
                     container.removeChild(p);
-                    saveElements(); // Daten werden aktualisiert, wenn ein Event gelöscht wird
+                    await saveElements();
                 });
 
-           });
-        
+                p.appendChild(deleteBtn);
+                container.appendChild(p);
+            });
+        } catch (error) {
+            console.error('Error restoring events:', error);
+        }
     }
 });
 
+
+
+
+/*  restoreElements();
+
+    let button = document.getElementById("saveBtn");
+    button.addEventListener("click", addElement);
+
+    async function addElement(event) {
+        event.preventDefault();
+
+        let eventNameField = document.getElementById("nameofevent");
+        let startDateField = document.getElementById("startofevent");
+        let endDateField = document.getElementById("endofevent");
+
+        let startDate = formatDate(startDateField.value);
+        let endDate = formatDate(endDateField.value);
+
+        let container = document.getElementById("forum");
+        let p = document.createElement("p");
+
+        p.textContent = `${startDate} - ${endDate}: ${eventNameField.value} `;
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "delete";
+        deleteBtn.classList.add("deleteBtn");
+        deleteBtn.addEventListener("click", function () {
+            container.removeChild(p);
+            saveElements();
+        });
+
+        p.appendChild(deleteBtn);
+        container.insertBefore(p, document.getElementById("formular"));
+
+        eventNameField.value = "";
+        startDateField.value = "";
+        endDateField.value = "";
+
+        await saveElements();
+    }
+
+    function formatDate(dateString) {
+        let date = new Date(dateString);
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+
+        if (day < 10) {
+            day = "0" + day;
+        }
+
+        if (month < 10) {
+            month = "0" + month;
+        }
+        return `${day}.${month}.${year}`;
+    }
+
+    async function saveElements() {
+        let events = [];
+        let container = document.getElementById("forum");
+
+        let eventElements = container.querySelectorAll("p");
+
+        eventElements.forEach(function (eventElement) {
+            let eventText = eventElement.textContent.replace("delete", "");
+            events.push(eventText);
+        });
+
+        try {
+            await fetch('http://127.0.0.1:3000/api/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(events)
+            });
+        } catch (error) {
+            console.error('Error saving events:', error);
+        }
+    }
+
+    async function restoreElements() {
+        try {
+            let response = await fetch('http://127.0.0.1:3000/api/events');
+            let events = await response.json();
+
+            let container = document.getElementById("forum");
+
+            events.forEach(function (eventText) {
+                let p = document.createElement("p");
+                p.textContent = `${eventText} `;
+
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "delete";
+                deleteBtn.classList.add("deleteBtn");
+                deleteBtn.addEventListener("click", async function () {
+                    container.removeChild(p);
+                    await saveElements();
+                });
+
+                p.appendChild(deleteBtn);
+                container.appendChild(p);
+            });
+        } catch (error) {
+            console.error('Error restoring events:', error);
+        }
+    }
+});
+
+
+  //______________________________________________________________________________________________________________
+    // Überprüft, ob Daten vorhanden sind
+restoreElements();
+
+let button = document.getElementById("saveBtn");
+button.addEventListener("click", addElement);
+
+// Funktion, wenn der Button geklickt wird
+function addElement(event) {
+    // Seite wird nicht neu geladen
+    event.preventDefault();
+
+    // Textfelder bei IDs holen
+    let eventNameField = document.getElementById("nameofevent");
+    let startDateField = document.getElementById("startofevent");
+    let endDateField = document.getElementById("endofevent");
+
+    // Datum formatieren "Tag.Monat.Jahr"
+    let startDate = formatDate(startDateField.value);
+    let endDate = formatDate(endDateField.value);
+
+    let container = document.getElementById("forum");
+    let p = document.createElement("p");
+
+    // Kontext
+    p.textContent = startDate + " - " + endDate + ": " + eventNameField.value + " ";
+
+    // Delete Button erstellen
+    let deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "delete";
+    deleteBtn.classList.add("deleteBtn");
+    deleteBtn.addEventListener("click", function () {
+        container.removeChild(p);
+        saveElements(); // Daten werden aktualisiert, wenn ein Event gelöscht wird
+    });
+
+    // Delete Button wird hinzugefügt
+    p.appendChild(deleteBtn);
+
+    // Text wird oberhalb eingefügt
+    container.insertBefore(p, document.getElementById("formular"));
+
+    // Nach Eingabe wird Textfeld geleert
+    eventNameField.value = "";
+    startDateField.value = "";
+    endDateField.value = "";
+
+    saveElements(); // Daten werden aktualisiert, wenn ein Event hinzugefügt wird
+}
+
+function formatDate(dateString) {
+    let date = new Date(dateString);
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    // Im Datum wird eine "0" hinzugefügt
+    if (day < 10) {
+        day = "0" + day;
+    }
+
+    if (month < 10) {
+        month = "0" + month;
+    }
+    return day + "." + month + "." + year;
+}
+
+function saveElements() {
+    let events = []; //Array wird erstellt
+    let container = document.getElementById("forum"); // HTML- ELement mit der ID = forum wird gesucht und container zugewiesen
+
+    let eventElements = container.querySelectorAll("p"); //Alle p Elemente des Containers werden eventElement hinzugefügt
+
+    eventElements.forEach(function (eventElement) {
+        let eventText = eventElement.textContent.replace("delete", ""); //Für jedes p Element wird der Textinhalt aufgerufen und das Wort delete enfternt.
+        events.push(eventText); //Anschließend wird es in das Array 'events' eingefügt
+    });
+
+    localStorage.setItem("events", JSON.stringify(events));
+    // Wird im LocalStorage, als JSON, unter "events" gespeichert
+}
+
+function restoreElements() {
+    let events = JSON.parse(localStorage.getItem("events"));
+
+    if (events) {
+        let container = document.getElementById("forum");
+        // Eintrag "events" wird aus dem LocalStorage gelesen und als JSON geparst.
+        // Ergebnis wird der Variable 'events' zugewiesen
+
+        events.forEach(function (eventText) {
+            let p = document.createElement("p"); // Für jedes Ereignis wird ein neues p Element erstellt.
+            p.textContent = eventText + " "; // Eingabetext + Leerzeichen
+
+            // Delete Button erstellen
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "delete";
+            deleteBtn.classList.add("deleteBtn");
+            deleteBtn.addEventListener("click", function () {
+                container.removeChild(p);
+                saveElements(); // Daten werden aktualisiert, wenn ein Event gelöscht wird
+            });
+
+            p.appendChild(deleteBtn);
+            container.appendChild(p); // die von oben neue p Elemente werden im container eingefügt
+        });
+    }
+}
+});
+
+
 //____________________________________________________________________________________________________________________________
 
-    /*// überprüft, ob Daten vorhanden sind
+    // überprüft, ob Daten vorhanden sind
     restoreElements();
 
     let button = document.getElementById("saveBtn");
